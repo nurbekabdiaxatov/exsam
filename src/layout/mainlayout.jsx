@@ -3,12 +3,14 @@ import Navbar from "../commponents/Navbar/Navbar";
 import Sitebar from "../commponents/Sitebar/Sitebar";
 function mainlayout() {
   return (
-    <div>
+    <div className="">
       <Navbar />
-      <main>
-        <Outlet />
-      </main>
-      <Sitebar />
+      <div className="flex h-screen  ">
+        <Sitebar />
+        <main>
+          <Outlet />
+        </main>
+      </div>
     </div>
   );
 }

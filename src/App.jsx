@@ -22,7 +22,7 @@ function App() {
           element: <About />,
         },
         {
-          path: "/contact",
+          path: "/user",
           element: <Users />,
         },
       ],
