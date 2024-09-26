@@ -16,7 +16,7 @@ const Sidebar = () => {
     <div className="sidebar-container">
       <div className="sidebar-header">
         <img
-          src="../../../public/assets/Logo.png"
+          src="../../../public/Logo.png"
           className="sidebar-logo"
           alt="Favicon"
         />
