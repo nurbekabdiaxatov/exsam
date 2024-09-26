@@ -1,40 +1,65 @@
-import { Sidebar } from "flowbite-react";
+import { Link, useLocation } from "react-router-dom";
 import {
-  HiArrowSmLeft,
   HiChartPie,
   HiUser,
   HiViewBoards,
+  HiArrowSmLeft,
 } from "react-icons/hi";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-function Sitebar() {
-  const navigate = useNavigate();
-  
-    const handleLogout = () => {
-      localStorage.removeItem("access_token");
+import "./sitebar.css";
 
-      navigate("/login");
-    };
+const Sidebar = () => {
+  const location = useLocation();
+
+  const isActive = (path) => location.pathname === path;
+
   return (
-    <div className="">
-      <Sidebar aria-label="Sidebar with call to action button example">
-        <Sidebar.Items>
-          <Sidebar.ItemGroup>
-            <Link to="/">
-              <Sidebar.Item icon={HiChartPie}>Dashboard</Sidebar.Item>
+    <div className="sidebar-container">
+      <div className="sidebar-header">
+        <img
+          src="../../../public/assets/Logo.png"
+          className="sidebar-logo"
+          alt="Favicon"
+        />
+        <span className="sidebar-title">Panel</span>
+      </div>
+      <nav className="sidebar-nav">
+        <ul>
+          <li>
+            <Link to="/" className={`${isActive("/") ? "active" : ""}`}>
+              <HiChartPie className="icon" />
+              <span className="text">Dashboard</span>
             </Link>
-            <Link to="/user">
-              <Sidebar.Item icon={HiUser}>Users</Sidebar.Item>
+          </li>
+          <li>
+            <Link to="/user" className={`${isActive("/user") ? "active" : ""}`}>
+              <HiUser className="icon" />
+              <span className="text">Users</span>
             </Link>
-            <Sidebar.Item icon={HiViewBoards}>Kanban</Sidebar.Item>
-            <Sidebar.Item onClick={handleLogout} icon={HiArrowSmLeft}>
-              Logout
-            </Sidebar.Item>
-          </Sidebar.ItemGroup>
-        </Sidebar.Items>
-      </Sidebar>
+          </li>
+          <li>
+            <Link
+              to="/kanban"
+              className={`${isActive("/kanban") ? "active" : ""}`}
+            >
+              <HiViewBoards className="icon" />
+              <span className="text">Kanban</span>
+            </Link>
+          </li>
+        </ul>
+      </nav>
+      <div className="sidebar-footer">
+        <button
+          onClick={() => {
+            localStorage.removeItem("access_token");
+            window.location.href = "/login";
+          }}
+        >
+          <HiArrowSmLeft className="icon" />
+          <span className="text">Logout</span>
+        </button>
+      </div>
     </div>
   );
-}
+};
 
-export default Sitebar;
+export default Sidebar;

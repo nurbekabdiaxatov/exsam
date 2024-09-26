@@ -1,0 +1,98 @@
+.sidebar-container {
+    width: 250px;
+    height: 100vh;
+    background-color: #1e293b;
+    /* Dark blue-gray for a modern look */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1rem;
+    color: #fff;
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.sidebar-logo {
+    width: 40px;
+    height: 40px;
+}
+
+.sidebar-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fbbf24;
+    /* Bright yellow for title */
+}
+
+.sidebar-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-nav li {
+    margin: 1rem 0;
+}
+
+.sidebar-nav a {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem;
+    color: #e5e7eb;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar-nav a:hover {
+    background-color: #124e62;
+    /* Highlight with teal */
+}
+
+.sidebar-nav a.active {
+    background-color: #fbbf24;
+    /* Active link with yellow */
+    color: #1e293b;
+    font-weight: bold;
+}
+
+.sidebar-nav .icon {
+    margin-right: 1rem;
+    font-size: 1.5rem;
+}
+
+.sidebar-footer {
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.sidebar-footer button {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #ef4444;
+    /* Red background */
+    border: none;
+    border-radius: 0.5rem;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar-footer button:hover {
+    background-color: #b91c1c;
+    /* Darker red on hover */
+}
+
+.sidebar-footer .icon {
+    margin-right: 1rem;
+    font-size: 1.5rem;
+}
