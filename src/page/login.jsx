@@ -3,6 +3,7 @@ import axiosInstance from "../axiosInstance";
 import { useNavigate } from "react-router-dom";
 import { Button } from "flowbite-react";
 import { toast } from "sonner";
+import Loginimg from "../../public/Login.jpg";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -31,7 +32,7 @@ const Login = () => {
     <div className="h-screen flex items-center">
       <div className="max-w-screen-xl w-full sm:m-10 sm:rounded-lg flex items-center justify-center flex-wrap">
         <div>
-          <img src="./public/Login.jpg" alt="Flowbite" />
+          <img src={Loginimg} alt="Flowbite" />
         </div>
         <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
           <h1 className="Login font-bold text-center">Login</h1>

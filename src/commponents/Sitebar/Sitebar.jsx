@@ -6,7 +6,7 @@ import {
   HiArrowSmLeft,
 } from "react-icons/hi";
 import "./sitebar.css";
-
+import Logo from "../../../public/Logo.png"
 const Sidebar = () => {
   const location = useLocation();
 
@@ -15,11 +15,7 @@ const Sidebar = () => {
   return (
     <div className="sidebar-container">
       <div className="sidebar-header">
-        <img
-          src="./public/Logo.png"
-          className="sidebar-logo"
-          alt="Favicon"
-        />
+        <img src={Logo} className="sidebar-logo" alt="Favicon" />
         <span className="sidebar-title">Panel</span>
       </div>
       <nav className="sidebar-nav">
