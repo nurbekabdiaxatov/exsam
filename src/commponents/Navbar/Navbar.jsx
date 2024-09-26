@@ -14,8 +14,12 @@ function Component() {
     <>
       <Navbar fluid rounded className="">
         <Navbar.Brand href="https://flowbite-react.com">
-          <img src="/favicon.svg" className="mr-3 h-6 sm:h-9" alt="Favicon" />
-          <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
+          <img
+            src="../../../public/assets/Logo.png"
+            className="mr-3 h-10 sm:h-9 w-10"
+            alt="Favicon"
+          />
+          <span className="self-center whitespace-nowrap text-xl font-semibold Color ">
             Panel
           </span>
         </Navbar.Brand>
@@ -31,11 +35,7 @@ function Component() {
               />
             }
           >
-            <Dropdown.Item>Dashboard</Dropdown.Item>
-            <Dropdown.Item>Settings</Dropdown.Item>
-            <Dropdown.Item>Earnings</Dropdown.Item>
-            <Dropdown.Divider />
-            <Dropdown.Item onClick={handleLogout}>Sign out</Dropdown.Item>
+            <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
           </Dropdown>
         </div>
       </Navbar>
