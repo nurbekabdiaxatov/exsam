@@ -3,7 +3,6 @@ import Home from "./page/home";
 import About from "./page/about";
 import Users from "./page/user";
 import Login from "./page/login";
-import Register from "./page/register";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import MainLayout from "./layout/mainlayout";
 import ProtectedRoute from "./commponents/ProtectedRoute/ProtectedRoute.jsx";
@@ -35,10 +34,6 @@ function App() {
     {
       path: "/login",
       element: <Login />, 
-    },
-    {
-      path: "/register",
-      element: <Register />, 
     },
   ]);
 

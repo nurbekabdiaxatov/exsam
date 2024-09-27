@@ -2,6 +2,7 @@
     width: 250px;
     height: 100vh;
     background-color: #1e293b;
+    border-radius:0px 18px 18px 0px;
     /* Dark blue-gray for a modern look */
     display: flex;
     flex-direction: column;
@@ -26,7 +27,7 @@
 .sidebar-title {
     font-size: 1.5rem;
     font-weight: bold;
-    color: #fbbf24;
+    color: #ffffff;
     /* Bright yellow for title */
 }
 
@@ -51,12 +52,12 @@
 }
 
 .sidebar-nav a:hover {
-    background-color: #124e62;
+    background-color: #686868;
     /* Highlight with teal */
 }
 
 .sidebar-nav a.active {
-    background-color: #fbbf24;
+    background-color: #ffffff;
     /* Active link with yellow */
     color: #1e293b;
     font-weight: bold;

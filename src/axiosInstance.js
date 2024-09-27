@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-    baseURL: 'https://json-api.uz/api/project/exsam',
+    baseURL: 'https://json-api.uz/api/project/exam',
     timeout: 10000,
 });
 
