@@ -104,7 +104,7 @@ function Users() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
-                className="border rounded-md p-2 w-full focus:outline-none focus:ring focus:ring-[#1e293b]"
+                className="border rounded-md p-2 w-full focus:outline-none border_select"
               />
             </div>
             <div>
@@ -114,7 +114,7 @@ function Users() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="border rounded-md p-2 w-full focus:outline-none focus:ring focus:ring-[#1e293b]"
+                className="border rounded-md p-2 w-full focus:outline-none border_select"
               />
             </div>
             <div>
@@ -122,7 +122,7 @@ function Users() {
               <select
                 value={type}
                 onChange={(e) => setType(e.target.value)}
-                className="border rounded-md p-2 w-full focus:outline-none focus:ring focus:ring-[#1e293b]"
+                className="border rounded-md p-2 w-full focus:outline-none border_select"
               >
                 <option value="user">Foydalanuvchi</option>
                 <option value="admin">Admin</option>

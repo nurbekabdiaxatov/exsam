@@ -24,3 +24,8 @@
     background-color: #0080ff00 !important;
     
 }
+
+.border_select:focus {
+    --tw-ring-color: #155e75 !important;
+    border-color: #155e75;
+}
