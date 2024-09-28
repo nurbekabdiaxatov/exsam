@@ -1,12 +1,9 @@
 import { Link, useLocation } from "react-router-dom";
-import {
-  HiChartPie,
-  HiUser,
-  HiViewBoards,
-  HiArrowSmLeft,
-} from "react-icons/hi";
+import { Avatar } from "flowbite-react";
+import { HiChartPie, HiTable, HiArrowSmLeft, HiUser } from "react-icons/hi"; // HiUser qo'shildi
 import "./sitebar.css";
-import Logo from "../../../public/Logo.png"
+import Logo from "../../../public/Logo.png";
+
 const Sidebar = () => {
   const location = useLocation();
 
@@ -27,32 +24,39 @@ const Sidebar = () => {
             </Link>
           </li>
           <li>
-            <Link to="/user" className={`${isActive("/user") ? "active" : ""}`}>
-              <HiUser className="icon" />
-              <span className="text">Users</span>
+            <Link
+              to="/about"
+              className={`${isActive("/about") ? "active" : ""}`}
+            >
+              <HiTable className="icon" />
+              <span className="text">Create</span>
             </Link>
           </li>
+
           <li>
-            <Link
-              to="/kanban"
-              className={`${isActive("/kanban") ? "active" : ""}`}
-            >
-              <HiViewBoards className="icon" />
-              <span className="text">Kanban</span>
+            <Link to="/user" className={`${isActive("/user") ? "active" : ""}`}>
+              <HiUser className="icon" /> {/* Bu yerda HiUser ishlatilmoqda */}
+              <span className="text">Users</span>
             </Link>
           </li>
         </ul>
       </nav>
-      <div className="sidebar-footer">
+      <div className="sidebar-footer flex justify-between">
         <button
           onClick={() => {
             localStorage.removeItem("access_token");
             window.location.href = "/login";
           }}
+          className="button1"
         >
           <HiArrowSmLeft className="icon" />
           <span className="text">Logout</span>
         </button>
+        <Avatar
+          alt="User settings"
+          img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+          rounded
+        />
       </div>
     </div>
   );
