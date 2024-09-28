@@ -135,16 +135,15 @@ function Home() {
       </div>
 
       <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 h-full">
-        <div className="flex flex-col md:flex-row md:gap-4 mt-4 ">
-          <div className="bg-white p-4 rounded-lg shadow-md flex-1">
-            <h3 className="font-semibold text-lg">Line Chart</h3>
-            <Line data={lineChartData} options={{ responsive: true }} />
-          </div>
-          <div className="bg-white p-4 rounded-lg shadow-md flex-1">
-            <h3 className="font-semibold text-lg">Pie Chart</h3>
-            <Pie data={pieChartData} options={{ responsive: true }} />
-          </div>
+        <div className="bg-white p-4 rounded-lg shadow-md flex-1">
+          <h3 className="font-semibold text-lg">Line Chart</h3>
+          <Line data={lineChartData} options={{ responsive: true }} />
         </div>
+        <div className="bg-white p-4 rounded-lg shadow-md flex-1">
+          <h3 className="font-semibold text-lg">Pie Chart</h3>
+          <Pie data={pieChartData} options={{ responsive: true }} />
+        </div>
+
         <div className="bg-white p-4 rounded-lg shadow-md">
           <h3 className="font-semibold text-lg">Bar Chart</h3>
           <Bar data={chartData} options={{ responsive: true }} />
