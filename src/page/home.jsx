@@ -4,6 +4,25 @@ import { Button, Table, Modal } from "flowbite-react";
 import { HiOutlinePencilAlt, HiTrash } from "react-icons/hi";
 import { toast } from "sonner"; // Sonner dan toast
 import { useNavigate } from "react-router-dom";
+import { Bar } from "react-chartjs-2"; // Bar chartni import qilish
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 function Home() {
   const [products, setProducts] = useState([]);
@@ -19,6 +38,10 @@ function Home() {
   const [error, setError] = useState("");
   const [filterCategory, setFilterCategory] = useState("");
   const navigate = useNavigate();
+
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   useEffect(() => {
     fetchData();
@@ -102,18 +125,18 @@ function Home() {
     setPrice("");
     setBrand("");
     setCategory("");
-    setEditingProduct(null); // Formani tozalaganda, tahrirlash holatini ham tozalash kerak
+    setEditingProduct(null);
     setModalOpen(false);
   };
 
   const handleEdit = (product) => {
-    setEditingProduct(product); // Tahrirlash holatini o'rnatish
+    setEditingProduct(product);
     setName(product.name);
     setDescription(product.description);
     setPrice(product.price);
     setBrand(product.brand);
     setCategory(product.category);
-    setModalOpen(true); // Modalni ochish
+    setModalOpen(true);
   };
 
   const handleDelete = async (id) => {
@@ -135,6 +158,12 @@ function Home() {
     navigate(`/products/${productId}`);
   };
 
+  // Kategoriya bo'yicha mahsulotlar sonini hisoblash
+  const categoryCounts = products.reduce((acc, product) => {
+    acc[product.category] = (acc[product.category] || 0) + 1;
+    return acc;
+  }, {});
+
   const filteredProducts = products.filter((product) => {
     const matchesSearch = product.name
       .toLowerCase()
@@ -143,6 +172,34 @@ function Home() {
       filterCategory === "" || product.category === filterCategory;
     return matchesSearch && matchesCategory;
   });
+
+  // Pagination logic
+  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedProducts = filteredProducts.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
+
+  // Total Price Calculation
+  const calculateTotalPrice = () => {
+    return paginatedProducts
+      .reduce((total, product) => total + product.price, 0)
+      .toFixed(2);
+  };
+
+  // Bar diagramma uchun ma'lumotlar
+  const chartData = {
+    labels: Object.keys(categoryCounts),
+    datasets: [
+      {
+        label: "Mahsulotlar soni",
+        data: Object.values(categoryCounts),
+        backgroundColor: "rgba(75, 192, 192, 0.5)",
+      },
+    ],
+  };
+
   return (
     <div className="p-6 bg-gray-100 rounded-lg shadow-md">
       <h1 className="text-2xl font-semibold mb-6">
@@ -172,6 +229,13 @@ function Home() {
         </Button>
       </div>
 
+      {/* Total Price Display */}
+      <div className="mt-4">
+        <h2 className="text-xl font-semibold">
+          Umumiy suma: ${calculateTotalPrice()}
+        </h2>
+      </div>
+
       {/* Modal for adding/updating product */}
       <Modal show={modalOpen} onClose={clearForm}>
         <Modal.Header>
@@ -180,102 +244,134 @@ function Home() {
         <Modal.Body>
           <form onSubmit={handleSubmit}>
             <div>
-              <label className="font-semibold">Mahsulot nomi:</label>
+              <label className="font-semibold">Nom:</label>
               <input
                 type="text"
                 value={name}
-                onChange={(e) => setName(e.target.value.slice(0, 20))} // Limit to 20 characters
+                onChange={(e) => setName(e.target.value)}
+                className="border rounded-md p-2 w-full mt-1"
                 required
-                className="border rounded-md p-2 w-full focus:outline-none focus:ring focus:ring-[#1e293b]"
               />
             </div>
-            <div>
+            <div className="mt-2">
               <label className="font-semibold">Tavsif:</label>
-              <input
-                type="text"
+              <textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
+                className="border rounded-md p-2 w-full mt-1"
                 required
-                className="border rounded-md p-2 w-full focus:outline-none focus:ring focus:ring-[#1e293b]"
               />
             </div>
-            <div>
-              <label className="font-semibold">Narx:</label>
+            <div className="mt-2">
+              <label className="font-semibold">Narxi:</label>
               <input
                 type="number"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
+                className="border rounded-md p-2 w-full mt-1"
                 required
-                min="0"
-                className="border rounded-md p-2 w-full focus:outline-none focus:ring focus:ring-[#1e293b]"
               />
             </div>
-            <div>
+            <div className="mt-2">
               <label className="font-semibold">Brend:</label>
               <input
                 type="text"
                 value={brand}
                 onChange={(e) => setBrand(e.target.value)}
-                required
-                className="border rounded-md p-2 w-full focus:outline-none focus:ring focus:ring-[#1e293b]"
+                className="border rounded-md p-2 w-full mt-1"
               />
             </div>
-            <div>
-              <label className="font-semibold">Kategoriya:</label>
+            <div className="mt-2">
+              <label className="font-semibold">Kategoriyasi:</label>
               <input
                 type="text"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                required
-                className="border rounded-md p-2 w-full focus:outline-none focus:ring focus:ring-[#1e293b]"
+                className="border rounded-md p-2 w-full mt-1"
               />
             </div>
-            <div className="mt-6">
-              <Button type="submit" className="w-full ">
-                {editingProduct ? "Yangilash" : "Qo'shish"}
-              </Button>
-            </div>
+            <Button type="submit" className="mt-4">
+              Saqlash
+            </Button>
           </form>
         </Modal.Body>
       </Modal>
-      <Table>
+
+      {/* Bar chart */}
+      <Bar data={chartData} options={{ responsive: true }} />
+
+      {/* Table for displaying products */}
+      <Table className="mt-4">
         <Table.Head>
           <Table.HeadCell>Nom</Table.HeadCell>
           <Table.HeadCell>Tavsif</Table.HeadCell>
-          <Table.HeadCell>Narx</Table.HeadCell>
+          <Table.HeadCell>Narxi</Table.HeadCell>
           <Table.HeadCell>Brend</Table.HeadCell>
-          <Table.HeadCell>Kategoriya</Table.HeadCell>
+          <Table.HeadCell>Kategoriyasi</Table.HeadCell>
           <Table.HeadCell>Amallar</Table.HeadCell>
         </Table.Head>
-        {loading ? (
-          <p className="mr">Yuklanmoqda...</p>
-        ) : (
-          <Table.Body className="divide-y">
-            {filteredProducts.map((product) => (
-              <Table.Row key={product.id}>
+        <Table.Body>
+          {loading ? (
+            <Table.Row>
+              <Table.Cell colSpan={6} className="text-center">
+                Yuklanmoqda...
+              </Table.Cell>
+            </Table.Row>
+          ) : (
+            paginatedProducts.map((product) => (
+              <Table.Row
+                key={product.id}
+                onClick={() => handleProductClick(product.id)}
+              >
                 <Table.Cell>{product.name}</Table.Cell>
                 <Table.Cell>{product.description}</Table.Cell>
-                <Table.Cell>{product.price} so'm</Table.Cell>
+                <Table.Cell>{product.price}</Table.Cell>
                 <Table.Cell>{product.brand}</Table.Cell>
                 <Table.Cell>{product.category}</Table.Cell>
-                <Table.Cell>
-                  <div className="flex">
-                    <Button onClick={() => handleEdit(product)}>
-                      <HiOutlinePencilAlt />
-                    </Button>
-                    <Button
-                      onClick={() => handleDelete(product.id)}
-                      className="ml-2"
-                    >
-                      <HiTrash />
-                    </Button>
-                  </div>
+                <Table.Cell className="flex space-x-2">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleEdit(product);
+                    }}
+                  >
+                    <HiOutlinePencilAlt className="text-blue-500" />
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDelete(product.id);
+                    }}
+                  >
+                    <HiTrash className="text-red-500" />
+                  </button>
                 </Table.Cell>
               </Table.Row>
-            ))}
-          </Table.Body>
-        )}
+            ))
+          )}
+        </Table.Body>
       </Table>
+
+      {/* Pagination controls */}
+      <div className="flex justify-between mt-4">
+        <Button
+          disabled={currentPage === 1}
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+        >
+          Oldingi
+        </Button>
+        <span className="self-center">
+          Sahifa {currentPage} / {totalPages}
+        </span>
+        <Button
+          disabled={currentPage === totalPages}
+          onClick={() =>
+            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+          }
+        >
+          Keyingi
+        </Button>
+      </div>
     </div>
   );
 }
